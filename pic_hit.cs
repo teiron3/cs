@@ -19,8 +19,11 @@ class test
             BitmapData bmpData = bmp.LockBits(new Rectangle( 0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
             byte[] srcPix, bmpPix, srcLine, bmpLine;
-            srcPix = new byte[ bmp.Width * 4];
-            bmpPix = new byte[ bmp.Width * 4];
+            srcPix = new byte[ src.Width * src.Height * 4];
+            bmpPix = new byte[ bmp.Width * bmp.Height * 4];
+
+            srcLine = new byte[ bmp.Width * 4];
+            bmpLine = new byte[ bmp.Width * 4];
 
             Marshal.Copy( srcData.Scan0, srcPix, 0, srcPix.Length);
             Marshal.Copy( bmpData.Scan0, bmpPix, 0, bmpPix.Length);
