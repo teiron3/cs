@@ -9,11 +9,7 @@ class test
 {
     static void Main()
     {
-        string x = "test,555,6547";
-        foreach (string y in x.Split(','))
-        {
-            Console.WriteLine(y);
-        }
-
+        Console.WriteLine
+ 
     }
 }
