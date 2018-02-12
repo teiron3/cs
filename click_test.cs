@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;  // for DllImport, Marshal
 
+
 class test
 {
     [DllImport("user32.dll")]
@@ -54,7 +55,28 @@ class test
 
     const int screen_length = 0x10000;  // for MOUSEEVENTF_ABSOLUTE (この値は固定)
 
-    public void click_(int x, int y)
+    public int x = 0,y = 0;
+
+    private int rnd(int rr)
+    {
+        Random r = new System.Random();
+        return r.Next(rr);
+    }
+
+    public void click(int xx,int yy,int add_x,int add_y)
+    {
+        x = xx + rnd(add_x);
+        y = yy + rnd(add_y);
+        Console.WriteLine("x:" + x + "y:" + y);
+        int r = rnd(1000) + 1000;
+        Console.Write(r);
+        System.Threading.Thread.Sleep(r);
+        click_L();
+
+    }
+
+
+    private void click_L()
     {
         /*** マウスカーソルの移動と、ドラッグ操作の例 ***/
 
@@ -91,3 +113,4 @@ class test
 //       各 PC で設定された mouse speed と acceleration level に依存する。
 
 // Note: SendInput()パラメータの詳細は、MSDN『 MOUSEINPUT Structure 』を参照せよ。
+
