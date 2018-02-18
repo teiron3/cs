@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;  // for DllImport, Marshal
 
 
-class test
+class mouse_class
 {
     [DllImport("user32.dll")]
     extern static uint SendInput(
@@ -70,6 +70,8 @@ class test
         Console.WriteLine("x:" + x + "y:" + y);
         int r = rnd(1000) + 1000;
         Console.Write(r);
+        // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
+        Cursor.Position = new Point(x, y);
         System.Threading.Thread.Sleep(r);
         click_L();
 
@@ -79,10 +81,6 @@ class test
     private void click_L()
     {
         /*** マウスカーソルの移動と、ドラッグ操作の例 ***/
-
-        // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
-        Cursor.Position = new Point(x, y);
-
         // ドラッグ操作の準備 (struct 配列の宣言)
         INPUT[] input = new INPUT[2];  // 計3イベントを格納
 
