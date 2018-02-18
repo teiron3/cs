@@ -55,7 +55,7 @@ class mouse_class
 
     const int screen_length = 0x10000;  // for MOUSEEVENTF_ABSOLUTE (この値は固定)
 
-    public int x = 0,y = 0;
+    private int x = 0,y = 0;
 
     private int rnd(int rr)
     {
@@ -65,18 +65,25 @@ class mouse_class
 
     public void click(int xx,int yy,int add_x,int add_y)
     {
-        x = xx + rnd(add_x);
-        y = yy + rnd(add_y);
-        Console.WriteLine("x:" + x + "y:" + y);
+        xx += rnd(add_x);
+        yy += rnd(add_y);
+        Console.WriteLine("x:" + xx + "y:" + yy);
         int r = rnd(1000) + 1000;
         Console.Write(r);
         // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
-        Cursor.Position = new Point(x, y);
+        mouse_move(xx, yy);
         System.Threading.Thread.Sleep(r);
         click_L();
 
     }
 
+    public void mouse_move(int xx, int yy)
+    {
+        x = xx; y = yy;
+       // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
+        Cursor.Position = new Point(x, y);
+
+    }
 
     private void click_L()
     {

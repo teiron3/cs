@@ -1,0 +1,8 @@
+関数のメモ（外から呼び出すよう)
+
+click_.cs
+    click(int xx, int yy, int add_x, int add_y)
+        特定地点を(xx, yy)地点をクリックする。add_x, add_yは遊び
+
+    mouse_move(int xx, int yy)
+        マウスカーソルの移動
