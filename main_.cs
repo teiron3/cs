@@ -6,7 +6,7 @@ class main_class
     {
     Console.Write("test");
     
-    test tt = new test{};
+    mouse_class tt = new mouse_class{};
  
     tt.click(300 , 50 , 500, 800);
     return;
