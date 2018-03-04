@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-class csv_class
+partial class test
 {
     /*csvファイルのデータを格納するデータ型クラス宣言 */
     public pic_data_class[] p_class;
@@ -12,7 +12,7 @@ class csv_class
     private string csv_file = "csv_file.csv";
 
     /*データの数(csvファイルの行数)設定 */
-    private int rows =96;
+    public int rows =96;
 
 /* 
     static void Main()
@@ -46,7 +46,6 @@ class csv_class
         if(!System.IO.File.Exists(file_path)) {Console.WriteLine("csvファイルがありません");return;}
 
         System.IO.StreamReader text_strm = new System.IO.StreamReader(file_path, System.Text.Encoding.GetEncoding("shift_jis"));
-        Func<string, bool> exist = (ff) => {if(ff == "true") return true;else return false;};
         for(int i = 0; i < rows ; ++i)
         {
             this.p_class[i] = new pic_data_class();
@@ -54,16 +53,26 @@ class csv_class
             string s = text_strm.ReadLine();
             test_str = s.Split(',');
             
-            this.p_class[i].name = test_str[0];
-            if(test_str.Length >= 2) this.p_class[i].pic_exist = exist(test_str[1]) ;
-            if(test_str.Length >= 3) this.p_class[i].x = int.Parse(test_str[2]);
-            if(test_str.Length >= 4) this.p_class[i].y = int.Parse(test_str[3]);
-            if(test_str.Length >= 5) this.p_class[i].add_x = int.Parse(test_str[4]);
-            if(test_str.Length >= 6) this.p_class[i].add_y = int.Parse(test_str[5]);
-            if(test_str.Length >= 7) this.p_class[i].pic_x = int.Parse(test_str[6]);
-            if(test_str.Length >= 8) this.p_class[i].pic_y = int.Parse(test_str[7]);
-            if(test_str.Length >= 9) this.p_class[i].pic_add_x = int.Parse(test_str[8]);
-            if(test_str.Length >= 10) this.p_class[i].pic_add_y = int.Parse(test_str[9]);
+            this.p_class[i].Name = test_str[0];
+            if(test_str.Length >= 2) this.p_class[i].Set_Necessity = test_str[1];
+            if(test_str.Length >= 3) this.p_class[i].X = int.Parse(test_str[2]);
+            if(test_str.Length >= 4) this.p_class[i].Y = int.Parse(test_str[3]);
+            if(test_str.Length >= 5) this.p_class[i].Width = int.Parse(test_str[4]);
+            if(test_str.Length >= 6) this.p_class[i].Height = int.Parse(test_str[5]);
+            if(test_str.Length >= 7) this.p_class[i].Pic_X = int.Parse(test_str[6]);
+            if(test_str.Length >= 8) this.p_class[i].Pic_Y = int.Parse(test_str[7]);
+            if(test_str.Length >= 9) this.p_class[i].Pic_Width = int.Parse(test_str[8]);
+            if(test_str.Length >= 10) this.p_class[i].Pic_Height = int.Parse(test_str[9]);
+            if(test_str.Length >= 11) this.p_class[i].Pic_CreateDate = test_str[10];
+            /*
+            if(p_class[i].Necessity == true)
+            {
+                if(System.IO.File.Exists(p_class[i].Address))
+                    this.p_class[i].Pic_data = new Bitmap(p_class[i].Address);
+                else
+                    Console.WriteLine(p_class[i].Name + "のファイルがありません");
+            }
+            */
         }
         text_strm.Close();
     }
@@ -73,17 +82,46 @@ class csv_class
     {
         if(System.IO.File.Exists(csv_file) == true)
         {
-            Console.Write("以前のファイルはバックアップフォルダに移します");Console.ReadKey();
+            Console.Write("以前のファイルはバックアップフォルダに移します");
             if(System.IO.Directory.Exists(@".\csv_bk") == false)System.IO.Directory.CreateDirectory(@".\csv_bk");
-            System.IO.File.Move(csv_file, @".\csv_bk\" + System.DateTime.Now.ToString("yyMMddHHmm") + csv_file);
+            System.IO.File.Move(csv_file, @".\csv_bk\" + System.DateTime.Now.ToString("yyMMddHHmmss") + csv_file);
         }
         else
             Console.WriteLine("以前のファイルは見つかりませんでした。新たに作成します");
             
         System.IO.StreamWriter text_strm = new System.IO.StreamWriter(csv_file, false, System.Text.Encoding.GetEncoding("shift_jis"));
-        foreach(pic_data_class p in this.p_class)text_strm.WriteLine(p.name + "," + p.pic_exist + "," + p.x + "," + p.y + "," + p.add_x + "," + p.add_y + ","
-                                                                    + p.pic_x + "," + p.pic_y + "," + p.pic_add_x + "," + p.pic_add_y );
+        foreach(pic_data_class p in this.p_class)
+            text_strm.WriteLine(p.Name + "," + p.Necessity + "," + p.X + "," + p.Y + "," + p.Width + "," + p.Height + ","
+            + p.Pic_X + "," + p.Pic_Y + "," + p.Pic_Width + "," + p.Pic_Height + "," + p.Pic_CreateDate);
         text_strm.Close();
+    }
+
+    public void get_data(pic_data_class p)
+    {
+        Console.Write("左上座標として取得します。マウスカーソルを合わせてキーを押して下さい。");
+        Console.ReadLine();
+        p.X = Cursor.Position.X;
+        p.Y = Cursor.Position.Y;
+        do{
+            Console.Write("右下座標として取得します。");
+            Console.Write("値が+になるようにマウスカーソルを合わせてキーを押してください。");
+            Console.ReadLine();
+            p.Width = Cursor.Position.X - p.X;
+            p.Height = Cursor.Position.Y - p.Y;            
+        } while (p.Width <= 0 && p.Height <= 0);
+
+        Console.Write("取得画像左上座標として取得します。マウスカーソルを合わせてキーを押して下さい。");
+        Console.ReadLine();
+        p.Pic_X = Cursor.Position.X;
+        p.Pic_Y = Cursor.Position.Y;
+        do{
+            Console.Write("取得画像右下座標として取得します。");
+            Console.Write("値が+になるようにマウスカーソルを合わせてキーを押してください。");
+            Console.ReadLine();
+            p.Pic_Width = Cursor.Position.X - p.Pic_X;
+            p.Pic_Height = Cursor.Position.Y - p.Pic_Y;            
+        } while (p.Pic_Width <= 0 && p.Pic_Height <= 0);
+
     }
 
     public void add_bool()
@@ -93,11 +131,11 @@ class csv_class
             for(int a = 0 ; a == 0 ; )
             {   
                 a++;
-                Console.Write("[" + p.name +"]の画像取得が必要なら[t]を、不要な[f]を押してください=>");
+                Console.Write("[" + p.Name +"]の画像取得が必要なら[t]を、不要な[f]を押してください=>");
                 ConsoleKeyInfo key = Console.ReadKey();
                 Console.WriteLine();
-                if(key.Key == ConsoleKey.T) p.pic_exist = true;
-                else if(key.Key == ConsoleKey.F) p.pic_exist = false;
+                if(key.Key == ConsoleKey.T) p.Necessity = true;
+                else if(key.Key == ConsoleKey.F) p.Necessity = false;
                     else a = 0;
             } 
         }
@@ -113,13 +151,13 @@ class csv_class
         }
         foreach(pic_data_class p in this.p_class)
         {
-            if(!p.pic_exist) continue;
-            if(System.IO.File.Exists(@"pic_folder\" + p.name + ".bmp"))
+            if(!p.Necessity) continue;
+            if(System.IO.File.Exists(p.Address))
             {
                 
             }
             else
-                Console.WriteLine(p.name + "のbmpファイルがありません");
+                Console.WriteLine(p.Name + "のbmpファイルがありません");
         }
     }
 
@@ -129,16 +167,35 @@ class csv_class
 
 class pic_data_class
 {
-    public string name;
-    public bool pic_exist;
-    public int x;
-    public int y;
-    public int add_x;
-    public int add_y;
-    public int pic_x;
-    public int pic_y;
-    public int pic_add_x;
-    public int pic_add_y;
-    public Bitmap pic_data;
+    bool need;
 
+    public string Name{get;set;}
+    public bool Necessity{get{return need;}set{need = value;}}
+    public string Set_Necessity{get{return "";} set{ if(value == "True") need = true;else need = false;}}
+    public int X{get;set;}
+    public int Y{get;set;}
+    public int Width{get;set;}
+    public int Height{get;set;}
+    public int Pic_X{get;set;}
+    public int Pic_Y{get;set;}
+    public int Pic_Width{get;set;}
+    public int Pic_Height{get;set;}
+    public string Pic_CreateDate{get;set;}
+    public Bitmap Pic_data{get;set;}
+    public string Address{get{return @".\pic\" + this.Name + ".bmp";}}
+
+}
+
+class pic_make
+{
+    static public void pic_create(pic_data_class obj)
+    {
+        Bitmap bmp = new Bitmap( obj.Pic_Width, obj.Pic_Height);
+        Graphics g = Graphics.FromImage(bmp);
+        g.CopyFromScreen( new Point( obj.Pic_X, obj.Pic_Y), new Point( 0, 0), bmp.Size);
+
+        g.Dispose();
+        bmp.Save(obj.Address);
+        
+    }
 }

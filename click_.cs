@@ -55,34 +55,23 @@ class mouse_class
 
     const int screen_length = 0x10000;  // for MOUSEEVENTF_ABSOLUTE (この値は固定)
 
-    private int x = 0,y = 0;
 
-    private int rnd(int rr)
+    int rnd(int rr)
     {
         Random r = new System.Random();
         return r.Next(rr);
     }
 
-    public void click(int xx,int yy,int add_x,int add_y)
+    public void move_and_click(pic_data_class obj)
     {
-        xx += rnd(add_x);
-        yy += rnd(add_y);
-        Console.WriteLine("x:" + xx + "y:" + yy);
-        int r = rnd(1000) + 1000;
-        Console.Write(r);
-        // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
-        mouse_move(xx, yy);
-        System.Threading.Thread.Sleep(r);
+        Cursor.Position = new Point(obj.X + rnd(obj.Width), obj.Y + rnd(obj.Height));
+        System.Threading.Thread.Sleep(rnd(1000) + 1000);
         click_L();
-
     }
 
-    public void mouse_move(int xx, int yy)
+    public void move_cursor(pic_data_class obj)
     {
-        x = xx; y = yy;
-       // マウスカーソルの移動 (絶対座標 200, 10 へ移動)
-        Cursor.Position = new Point(x, y);
-
+        Corsor.Position = new Point(obj.X + rnd(obj.Width), obj.Y + rnd(obj.Height));
     }
 
     private void click_L()

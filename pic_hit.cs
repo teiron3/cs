@@ -9,7 +9,7 @@ class test
         static void Main()
         {
             Bitmap src = new Bitmap( Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-            Bitmap bmp = new Bitmap( @"C:\"); //対象のファイル保存場所
+            Bitmap bmp = new Bitmap( @"C:\"); 
 
             Graphics g = Graphics.FromImage(src);
             g.CopyFromScreen( new Point( 0, 0), new Point( 0, 0), src.Size);
