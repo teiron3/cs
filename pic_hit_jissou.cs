@@ -85,6 +85,7 @@ class pic_hit
 
 }
 
+/* 
 class pic_make
 {
     public void pic_create(pic_data_class obj)
@@ -98,3 +99,4 @@ class pic_make
         
     }
 }
+*/

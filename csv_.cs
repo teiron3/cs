@@ -9,7 +9,7 @@ partial class test
     public pic_data_class[] p_class;
 
     /*csvファイル名の設定 */
-    private string csv_file = "csv_file.csv";
+    public string csv_file{get{return "csv_file.csv";}}
 
     /*データの数(csvファイルの行数)設定 */
     public int rows =96;
@@ -64,15 +64,15 @@ partial class test
             if(test_str.Length >= 9) this.p_class[i].Pic_Width = int.Parse(test_str[8]);
             if(test_str.Length >= 10) this.p_class[i].Pic_Height = int.Parse(test_str[9]);
             if(test_str.Length >= 11) this.p_class[i].Pic_CreateDate = test_str[10];
-            /*
+            
             if(p_class[i].Necessity == true)
             {
                 if(System.IO.File.Exists(p_class[i].Address))
                     this.p_class[i].Pic_data = new Bitmap(p_class[i].Address);
                 else
-                    Console.WriteLine(p_class[i].Name + "のファイルがありません");
+                    MessageBox.Show(p_class[i].Name + "のファイルがありません");
             }
-            */
+            
         }
         text_strm.Close();
     }
@@ -182,7 +182,7 @@ class pic_data_class
     public int Pic_Height{get;set;}
     public string Pic_CreateDate{get;set;}
     public Bitmap Pic_data{get;set;}
-    public string Address{get{return @".\pic\" + this.Name + ".bmp";}}
+    public string Address{get{return @".\pic_folder\" + this.Name + ".bmp";}}
 
 }
 

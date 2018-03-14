@@ -8,6 +8,12 @@ partial class maintest
     static void Main()
     {
         test tt = new test();
+        if(!System.IO.File.Exists(tt.csv_file)) {MessageBox.Show("csvファイルがありません\n終了します");return;}
+        if(!System.IO.Directory.Exists("pic_folder"))
+        {
+            MessageBox.Show("「pic_folder」がありません。フォルダを作成します。");
+            System.IO.Directory.CreateDirectory("pic_folder");
+        }
         tt.read_csv();
         Application.Run(tt);
     }

@@ -71,10 +71,10 @@ class mouse_class
 
     public void move_cursor(pic_data_class obj)
     {
-        Corsor.Position = new Point(obj.X + rnd(obj.Width), obj.Y + rnd(obj.Height));
+        Cursor.Position = new Point(obj.X + rnd(obj.Width), obj.Y + rnd(obj.Height));
     }
 
-    private void click_L()
+    public void click_L()
     {
         /*** マウスカーソルの移動と、ドラッグ操作の例 ***/
         // ドラッグ操作の準備 (struct 配列の宣言)
