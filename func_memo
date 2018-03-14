@@ -1,9 +1,14 @@
 関数のメモ（外から呼び出すよう)
 
 click_.cs
+    click_L
+        mouse_class
+        左クリック
+
     click(obj)
+        mouse_class
         特定地点を(obj.x, obj.y)地点をクリックする。ojb.width, obj.heightは遊び
 
-
     mouse_move(int xx, int yy)
+        mouse_class
         マウスカーソルの移動

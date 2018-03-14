@@ -7,7 +7,7 @@ using System.Linq;
 class pic_hit
 {
     /* objに記録されたbmpデータが指定の場所にあればtrueを返す */
-    public bool pic_con(pic_data_class obj)
+    public static bool pic_con(pic_data_class obj)
     {
         Bitmap src = new Bitmap( obj.Pic_Width, obj.Pic_Height);
         
@@ -34,7 +34,7 @@ class pic_hit
     }
 
     /* objに記録されたbmpデータが指定の範囲にあればtrueを返す */
-    public bool pic_search(pic_data_class obj)
+    public static bool pic_search(pic_data_class obj)
     {
         Bitmap src = new Bitmap( obj.Width, obj.Height);
         

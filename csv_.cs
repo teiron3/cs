@@ -124,6 +124,7 @@ partial class test
 
     }
 
+    /*
     public void add_bool()
     {
         foreach(pic_data_class p in p_class)
@@ -160,6 +161,7 @@ partial class test
                 Console.WriteLine(p.Name + "‚Ìbmpƒtƒ@ƒCƒ‹‚ª‚ ‚è‚Ü‚¹‚ñ");
         }
     }
+     */
 
 
 
